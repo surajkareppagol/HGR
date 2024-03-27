@@ -2,7 +2,7 @@ import cv2
 import mediapipe as mp
 from mediapipe.tasks.python import vision
 
-model_path = "tasks/gesture_recognizer.task"
+model_path = "tasks/custom_model.task"
 recognizer = vision.GestureRecognizer.create_from_model_path(model_path)
 
 capture = cv2.VideoCapture(0)
