@@ -1,4 +1,4 @@
-# HGR - Hand Gesture Recognition
+# 👍 HGR - Hand Gesture Recognition
 
 HGR is a hand gesture recognition toolkit built on top of Google's MediaPipe.
 
