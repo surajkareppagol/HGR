@@ -2,13 +2,16 @@
 
 HGR is a hand gesture recognition toolkit built on top of Google's MediaPipe.
 
-It is still in development, the aim is to create a python module that can be used easily in application to utilize hand gesture recognition capabilities.
+It is still in development, the aim is to create a system that can be used easily in applications to utilize hand gesture recognition capabilities.
 
 ## 🖥️ GUI
 
 ![HGR Main](https://raw.githubusercontent.com/surajkareppagol/Project-Assets/main/HGR/HGR%20Main.png)
 
-![HGR Main](https://raw.githubusercontent.com/surajkareppagol/Project-Assets/main/HGR/HGR%20Actions.png)
+![HGR Actions](https://raw.githubusercontent.com/surajkareppagol/Project-Assets/main/HGR/HGR%20Actions.png)
+
+![HGR Train](https://raw.githubusercontent.com/surajkareppagol/Project-Assets/main/HGR/HGR%20Train.png)
+
 
 ## 🎯 Model Maker Scores
 
