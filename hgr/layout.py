@@ -28,11 +28,22 @@ class UI(Tracker):
 
         return img
 
-    def get_directory_name(self, path="", browse=True):
+    def train(self, widgets, path="", browse=True):
         if browse:
             self.training_data_directory = filedialog.askdirectory()
         else:
             self.training_data_directory = path
+
+        for widget in widgets:
+            widget.config(state="disabled")
+
+        # Label
+        train_window_directory_label = tk.Label(
+            master=self.train_window,
+            text=f"📁 {self.training_data_directory}",
+            font=("Fira Code", 20),
+        )
+        train_window_directory_label.pack(pady=20)
 
     def create_train_window(self):
         self.train_window = tk.Toplevel()
@@ -67,8 +78,14 @@ class UI(Tracker):
             master=train_window_file_frame,
             text="Ok",
             font=("Fira Code", 20),
-            command=lambda: self.get_directory_name(
-                train_window_directory_entry_var.get(), browse=False
+            command=lambda: self.train(
+                [
+                    train_window_ok_button,
+                    train_window_directory_button,
+                    train_window_directory_entry,
+                ],
+                train_window_directory_entry_var.get(),
+                browse=False,
             ),
         )
 
@@ -76,23 +93,19 @@ class UI(Tracker):
             master=train_window_file_frame,
             text="Browse",
             font=("Fira Code", 20),
-            command=lambda: self.get_directory_name(),
+            command=lambda: self.train(
+                [
+                    train_window_ok_button,
+                    train_window_directory_button,
+                    train_window_directory_entry,
+                ]
+            ),
         )
 
         train_window_ok_button.pack(side="left", padx=10)
         train_window_directory_button.pack(side="left", padx=10)
 
         train_window_file_frame.pack(anchor="center", pady=40)
-
-        # Label
-        train_window_directory_label = tk.Label(
-            master=self.train_window,
-            text="self.training_data_directory",
-            font=("Fira Code", 20),
-        )
-        train_window_directory_label.pack(pady=20)
-
-        self.train_window.mainloop()
 
     def get_width_height(self, window):
         return (window.winfo_screenwidth(), window.winfo_screenheight())
@@ -198,9 +211,12 @@ class UI(Tracker):
 
         # Label
         widget_action_label = tk.Label(
-            master=widget_action_frame, text=f"({x}, {y})", font=("Fira Code", 20)
+            master=widget_action_frame,
+            text=f"({x}, {y})",
+            font=("Fira Code", 20),
+            width=20,
         )
-        widget_action_label.pack(side="left", padx=40, expand=True, fill="x")
+        widget_action_label.pack(side="left", padx=40, expand=True, fill="both")
 
         self.add_action(f"({x}, {y})", "ls")
 
