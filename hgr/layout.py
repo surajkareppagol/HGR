@@ -1,21 +1,106 @@
 import tkinter as tk
 from pprint import pprint
+from tkinter import filedialog
 
 import cv2 as cv
 import ttkbootstrap as ttk
+from landmarks import Tracker
 from PIL import Image, ImageTk
+from rich.console import Console
+from rich.panel import Panel
 
 
-class UI:
+class UI(Tracker):
     def __init__(self):
+        super().__init__()
+
         self.hgr_actions = {}
         self.hgr_actions_count = 0
         self.cam = cv.VideoCapture(0)
 
+        self.tracker = False
+
+        self.training_data_directory = ""
+
+    def landmarks(self, img):
+        img = super().detect_hands(img)
+        img = super().get_landmarks(img)
+
+        return img
+
+    def get_directory_name(self, path="", browse=True):
+        if browse:
+            self.training_data_directory = filedialog.askdirectory()
+        else:
+            self.training_data_directory = path
+
+    def create_train_window(self):
+        self.train_window = tk.Toplevel()
+
+        self.train_window.iconphoto(False, self.img)
+
+        self.train_window.title("Train Model")
+        self.train_window.geometry(f"{self.window_size[0]}x{self.window_size[1]}")
+
+        # Label
+        train_window_label = tk.Label(
+            master=self.train_window, text="Train Model", font=("Fira Code", 20)
+        )
+        train_window_label.pack()
+
+        # Frame
+        train_window_file_frame = tk.Frame(master=self.train_window)
+
+        # Label
+        train_window_directory_entry_var = tk.StringVar()
+        train_window_directory_entry = tk.Entry(
+            master=train_window_file_frame,
+            textvariable=train_window_directory_entry_var,
+            font=("Fira Code", 20),
+            width=40,
+        )
+
+        train_window_directory_entry.pack(side="left", padx=40)
+
+        # Button
+        train_window_ok_button = tk.Button(
+            master=train_window_file_frame,
+            text="Ok",
+            font=("Fira Code", 20),
+            command=lambda: self.get_directory_name(
+                train_window_directory_entry_var.get(), browse=False
+            ),
+        )
+
+        train_window_directory_button = tk.Button(
+            master=train_window_file_frame,
+            text="Browse",
+            font=("Fira Code", 20),
+            command=lambda: self.get_directory_name(),
+        )
+
+        train_window_ok_button.pack(side="left", padx=10)
+        train_window_directory_button.pack(side="left", padx=10)
+
+        train_window_file_frame.pack(anchor="center", pady=40)
+
+        # Label
+        train_window_directory_label = tk.Label(
+            master=self.train_window,
+            text="self.training_data_directory",
+            font=("Fira Code", 20),
+        )
+        train_window_directory_label.pack(pady=20)
+
+        self.train_window.mainloop()
+
     def get_width_height(self, window):
         return (window.winfo_screenwidth(), window.winfo_screenheight())
 
-    def create(self, icon, title="TK App"):
+    def toggle_detection(self):
+        self.tracker = True if not self.tracker else False
+
+    def create_main_window(self, icon, title="TK App"):
         self.window = ttk.Window(themename="darkly")
         self.icon = icon
 
@@ -37,7 +122,10 @@ class UI:
 
         # Button
         window_start_button = tk.Button(
-            master=windows_button_frame, text="Start HGR", font=("Fira Code", 20)
+            master=windows_button_frame,
+            text="Start HGR",
+            font=("Fira Code", 20),
+            command=lambda: self.toggle_detection(),
         )
 
         window_end_button = tk.Button(
@@ -52,7 +140,10 @@ class UI:
         )
 
         window_train_button = tk.Button(
-            master=windows_button_frame, text="Train Model", font=("Fira Code", 20)
+            master=windows_button_frame,
+            text="Train Model",
+            font=("Fira Code", 20),
+            command=lambda: self.create_train_window(),
         )
 
         window_start_button.pack(side="left")
@@ -76,8 +167,13 @@ class UI:
         success, frame = self.cam.read()
 
         if success:
-            frame = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
-            image = Image.fromarray(frame)
+            if self.tracker:
+                self.frame = super().detect_hands(frame)
+                # self.frame = super().get_landmarks(frame)
+
+            self.frame = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
+
+            image = Image.fromarray(self.frame)
             image = ImageTk.PhotoImage(image=image)
 
             container.photo = image  # type: ignore
@@ -146,7 +242,7 @@ class UI:
 
     def create_sub_window(self):
         self.sub_window = tk.Toplevel()
-        
+
         self.sub_window.iconphoto(False, self.img)
 
         self.sub_window.title("Actions")
@@ -192,5 +288,10 @@ class UI:
 
 if __name__ == "__main__":
     ui = UI()
+    console = Console()
+    console.clear()
+    console.print(Panel("👍 Hand Gesture Recognition"))
 
-    ui.create("assets/Thumbs Up.png", "👍 HGR - Hand Gesture Recognizer")
+    ui.create_main_window("assets/Thumbs Up.png", "👍 HGR - Hand Gesture Recognizer")
+
+    console.clear()
