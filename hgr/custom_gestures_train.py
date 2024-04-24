@@ -11,12 +11,6 @@ class Custom_Gestures_Train:
         self.dataset_path = dataset_path
         self.labels = []
         self.NUM_EXAMPLES = 5
-        self.model = None
-
-        self.train_data = None
-        self.rest_data = None
-        self.validation_data = None
-        self.test_data = None
 
     def print_labels(self):
         for i in listdir(self.dataset_path):
@@ -45,8 +39,6 @@ class Custom_Gestures_Train:
         self.train_data, self.rest_data = data.split(0.8)
         self.validation_data, self.test_data = self.rest_data.split(0.5)
 
-        print("Data split successfully")
-
         hparams = gesture_recognizer.HParams(export_dir=export_to)
         options = gesture_recognizer.GestureRecognizerOptions(hparams=hparams)
         self.model = gesture_recognizer.GestureRecognizer.create(
@@ -57,7 +49,8 @@ class Custom_Gestures_Train:
 
     def evaluate_model(self):
         loss, acc = self.model.evaluate(self.test_data, batch_size=1)
-        print(f"Test loss:{loss}, Test accuracy:{acc}")
+        return loss, acc
 
     def export(self, task):
         self.model.export_model(task)
+        return 1
