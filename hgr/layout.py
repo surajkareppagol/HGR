@@ -142,7 +142,10 @@ class UI(Tracker):
         )
 
         window_end_button = tk.Button(
-            master=windows_button_frame, text="End HGR", font=("Fira Code", 20)
+            master=windows_button_frame,
+            text="End HGR",
+            font=("Fira Code", 20),
+            command=lambda: self.toggle_detection(),
         )
 
         window_action_button = tk.Button(
@@ -165,8 +168,6 @@ class UI(Tracker):
         window_train_button.pack(side="left", padx=10)
 
         windows_button_frame.pack()
-
-        window_end_button.bind("<Button-1>", lambda e: self.window.quit())
 
         self.open_cam(window_cam_label)
 
