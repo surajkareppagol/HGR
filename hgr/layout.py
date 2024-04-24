@@ -195,12 +195,20 @@ class UI(Tracker):
 
         self.window.after(20, lambda: self.open_cam(container))
 
-    def add_action(self, points, action, entry=None, button=None):
-        self.hgr_actions[points] = action
+    def add_action(self, points, action, gesture, entry=None, button=None):
+        if points not in self.hgr_actions.keys():
+            self.hgr_actions[points] = []
+
+        if gesture:
+            self.hgr_actions[points].insert(0, action)
+        else:
+            self.hgr_actions[points].insert(1, action)
 
         if entry and button:
             entry.config(state="disabled")
             button.config(state="disabled")
+
+        pprint(self.hgr_actions)
 
     def add_action_widgets(self, window, x=0, y=0):
         if self.hgr_actions_count == 8:
@@ -212,37 +220,73 @@ class UI(Tracker):
         # Label
         widget_action_label = tk.Label(
             master=widget_action_frame,
-            text=f"({x}, {y})",
+            text=f"{self.hgr_actions_count + 1}. ({x}, {y})",
             font=("Fira Code", 20),
             width=20,
         )
         widget_action_label.pack(side="left", padx=40, expand=True, fill="both")
 
-        self.add_action(f"({x}, {y})", "ls")
+        # self.add_action(f"({x}, {y})", "ls", 0)
+
+        # Frame - 1
+        widget_action_frame_command = tk.Frame(master=widget_action_frame)
 
         # Entry
-        widget_action_entry_var = tk.StringVar()
-        widget_action_entry = tk.Entry(
-            master=widget_action_frame,
-            textvariable=widget_action_entry_var,
+        widget_action_entry_command_var = tk.StringVar()
+        widget_action_command_entry = tk.Entry(
+            master=widget_action_frame_command,
+            textvariable=widget_action_entry_command_var,
             font=("Fira Code", 20),
         )
-        widget_action_entry.pack(side="left", padx=20)
+        widget_action_command_entry.pack(side="left", padx=20)
 
         # Button
-        widget_action_button = tk.Button(
-            master=widget_action_frame,
+        widget_action_command_button = tk.Button(
+            master=widget_action_frame_command,
             text="Add",
             font=("Fira Code", 20),
             command=lambda: self.add_action(
                 f"({x}, {y})",
-                widget_action_entry_var.get(),
-                widget_action_entry,
-                widget_action_button,
+                widget_action_entry_command_var.get(),
+                0,
+                widget_action_command_entry,
+                widget_action_command_button,
             ),
         )
 
-        widget_action_button.pack(side="left", padx=20)
+        widget_action_command_button.pack(side="left", padx=20)
+
+        widget_action_frame_command.pack(side="left")
+
+        # Frame - 2
+        widget_action_frame_gesture = tk.Frame(master=widget_action_frame)
+
+        # Entry
+        widget_action_entry_gesture_var = tk.StringVar()
+        widget_action_gesture_entry = tk.Entry(
+            master=widget_action_frame_gesture,
+            textvariable=widget_action_entry_gesture_var,
+            font=("Fira Code", 20),
+        )
+        widget_action_gesture_entry.pack(side="left", padx=20)
+
+        # Button
+        widget_action_gesture_button = tk.Button(
+            master=widget_action_frame_gesture,
+            text="Add",
+            font=("Fira Code", 20),
+            command=lambda: self.add_action(
+                f"({x}, {y})",
+                widget_action_entry_gesture_var.get(),
+                1,
+                widget_action_gesture_entry,
+                widget_action_gesture_button,
+            ),
+        )
+
+        widget_action_gesture_button.pack(side="left", padx=20)
+
+        widget_action_frame_gesture.pack(side="left")
 
         widget_action_frame.pack(pady=10, anchor="center")
 
