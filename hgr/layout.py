@@ -1,9 +1,10 @@
 import tkinter as tk
 from pprint import pprint
-from tkinter import filedialog
+from tkinter import filedialog, font
 
 import cv2 as cv
 import ttkbootstrap as ttk
+from custom_gestures_train import Custom_Gestures_Train
 from landmarks import Tracker
 from PIL import Image, ImageTk
 from rich.console import Console
@@ -29,21 +30,46 @@ class UI(Tracker):
         return img
 
     def train(self, widgets, path="", browse=True):
+        training_done = False
+
         if browse:
             self.training_data_directory = filedialog.askdirectory()
         else:
             self.training_data_directory = path
 
-        for widget in widgets:
-            widget.config(state="disabled")
-
         # Label
         train_window_directory_label = tk.Label(
             master=self.train_window,
-            text=f"📁 {self.training_data_directory}",
+            text=f'🔄 Training with dataset at, 📁 "{self.training_data_directory}".',
             font=("Fira Code", 20),
         )
         train_window_directory_label.pack(pady=20)
+
+        for widget in widgets:
+            widget.config(state="disabled")
+
+        cgt = Custom_Gestures_Train(self.training_data_directory)
+        cgt.train("tasks")
+        training_done = cgt.export("custom_model_trained.task")
+
+        loss, accuracy = cgt.evaluate_model()
+
+        if training_done:
+            # Label
+            train_window_export_label = tk.Label(
+                master=self.train_window,
+                text='📄 Task file "custom_model.task" exported.',
+                font=("Fira Code", 20),
+            )
+            train_window_export_label.pack()
+
+            # Label
+            train_window_accuracy_label = tk.Label(
+                master=self.train_window,
+                text=f"🎯 Evaluation Results: 📈 {accuracy}%, 📉 {loss}%.",
+                font=("Fira Code", 20),
+            )
+            train_window_accuracy_label.pack()
 
     def create_train_window(self):
         self.train_window = tk.Toplevel()
@@ -107,15 +133,24 @@ class UI(Tracker):
 
         train_window_file_frame.pack(anchor="center", pady=40)
 
+        self.train_window.mainloop()
+
     def get_width_height(self, window):
         return (window.winfo_screenwidth(), window.winfo_screenheight())
 
-    def toggle_detection(self):
-        self.tracker = True if not self.tracker else False
+    def toggle_detection(self, start=True):
+        if start:
+            self.tracker = True
+        else:
+            self.tracker = False
 
     def create_main_window(self, icon, title="TK App"):
         self.window = ttk.Window(themename="darkly")
         self.icon = icon
+
+        self.default_font = font.nametofont("TkDefaultFont")
+        self.default_font.configure(family="Fira Code", size=20)
+        # self.window.resizable(False, False)
 
         self.img = tk.PhotoImage(file=self.icon)
         self.window.iconphoto(False, self.img)
@@ -145,7 +180,7 @@ class UI(Tracker):
             master=windows_button_frame,
             text="End HGR",
             font=("Fira Code", 20),
-            command=lambda: self.toggle_detection(),
+            command=lambda: self.toggle_detection(start=False),
         )
 
         window_action_button = tk.Button(
@@ -352,6 +387,7 @@ if __name__ == "__main__":
     console = Console()
     console.clear()
     console.print(Panel("👍 Hand Gesture Recognition"))
+    console.print("[bold yellow]Logs[/bold yellow]:")
 
     ui.create_main_window("assets/Thumbs Up.png", "👍 HGR - Hand Gesture Recognizer")
 
