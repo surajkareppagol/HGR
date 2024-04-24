@@ -357,6 +357,12 @@ class UI(Tracker):
             "<Control-1>",
             lambda e: self.add_action_widgets(sub_window_action_frame, e.x, e.y),
         )
+
+        self.sub_window.bind(
+            "<Shift-1>",
+            lambda e: self.add_action_widgets(sub_window_action_frame, -10, -10),
+        )
+
         sub_window_action_frame.pack(anchor="center")
 
         sub_window_action_button_frame = tk.Frame(master=self.sub_window)
