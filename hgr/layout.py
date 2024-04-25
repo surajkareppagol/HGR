@@ -41,7 +41,6 @@ class UI(Tracker):
         train_window_directory_label = tk.Label(
             master=self.train_window,
             text=f'🔄 Training with dataset at, 📁 "{self.training_data_directory}".',
-            font=("Fira Code", 20),
         )
         train_window_directory_label.pack(pady=20)
 
@@ -59,7 +58,6 @@ class UI(Tracker):
             train_window_export_label = tk.Label(
                 master=self.train_window,
                 text='📄 Task file "custom_model.task" exported.',
-                font=("Fira Code", 20),
             )
             train_window_export_label.pack()
 
@@ -67,7 +65,6 @@ class UI(Tracker):
             train_window_accuracy_label = tk.Label(
                 master=self.train_window,
                 text=f"🎯 Evaluation Results: 📈 {accuracy}%, 📉 {loss}%.",
-                font=("Fira Code", 20),
             )
             train_window_accuracy_label.pack()
 
@@ -93,7 +90,6 @@ class UI(Tracker):
         train_window_directory_entry = tk.Entry(
             master=train_window_file_frame,
             textvariable=train_window_directory_entry_var,
-            font=("Fira Code", 20),
             width=40,
         )
 
@@ -103,7 +99,6 @@ class UI(Tracker):
         train_window_ok_button = tk.Button(
             master=train_window_file_frame,
             text="Ok",
-            font=("Fira Code", 20),
             command=lambda: self.train(
                 [
                     train_window_ok_button,
@@ -118,7 +113,6 @@ class UI(Tracker):
         train_window_directory_button = tk.Button(
             master=train_window_file_frame,
             text="Browse",
-            font=("Fira Code", 20),
             command=lambda: self.train(
                 [
                     train_window_ok_button,
@@ -172,28 +166,24 @@ class UI(Tracker):
         window_start_button = tk.Button(
             master=windows_button_frame,
             text="Start HGR",
-            font=("Fira Code", 20),
             command=lambda: self.toggle_detection(),
         )
 
         window_end_button = tk.Button(
             master=windows_button_frame,
             text="End HGR",
-            font=("Fira Code", 20),
             command=lambda: self.toggle_detection(start=False),
         )
 
         window_action_button = tk.Button(
             master=windows_button_frame,
             text="Set Actions",
-            font=("Fira Code", 20),
             command=lambda: self.create_sub_window(),
         )
 
         window_train_button = tk.Button(
             master=windows_button_frame,
             text="Train Model",
-            font=("Fira Code", 20),
             command=lambda: self.create_train_window(),
         )
 
@@ -257,7 +247,6 @@ class UI(Tracker):
         widget_action_label = tk.Label(
             master=widget_action_frame,
             text=f"{self.hgr_actions_count + 1}. ({x}, {y})",
-            font=("Fira Code", 20),
             width=20,
         )
         widget_action_label.pack(side="left", padx=40, expand=True, fill="both")
@@ -280,7 +269,6 @@ class UI(Tracker):
         widget_action_command_button = tk.Button(
             master=widget_action_frame_command,
             text="Add",
-            font=("Fira Code", 20),
             command=lambda: self.add_action(
                 f"({x}, {y})",
                 widget_action_entry_command_var.get(),
@@ -310,7 +298,6 @@ class UI(Tracker):
         widget_action_gesture_button = tk.Button(
             master=widget_action_frame_gesture,
             text="Add",
-            font=("Fira Code", 20),
             command=lambda: self.add_action(
                 f"({x}, {y})",
                 widget_action_entry_gesture_var.get(),
@@ -371,14 +358,12 @@ class UI(Tracker):
         sub_window_action_cancel_button = tk.Button(
             master=sub_window_action_button_frame,
             text="Ok",
-            font=("Fira Code", 20),
             command=lambda: self.sub_window_buttons_action(0, self.sub_window),
         )
 
         sub_window_action_ok_button = tk.Button(
             master=sub_window_action_button_frame,
             text="Cancel",
-            font=("Fira Code", 20),
             command=lambda: self.sub_window_buttons_action(1, self.sub_window),
         )
 
