@@ -11,8 +11,6 @@ git clone https://github.com/surajkareppagol/HGR
 cd HGR
 ```
 
-Create and activate `virtual` environment.
-
 ```sh
 python3 -m venv venv
 ```
