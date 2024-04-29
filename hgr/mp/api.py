@@ -2,7 +2,7 @@
 
 # get_gestures()
 # get_landmarks_image()
-# annotate_image()
+# draw_landmarks_image()
 # get_landmark_image()
 # get_gesture_image()
 
@@ -27,7 +27,7 @@ class API:
         landmarks = tracker.get_landmarks(image)
         return landmarks
 
-    def annotate_image(self, image):
+    def draw_landmarks_image(self, image):
         return tracker.detect_hands(image)
 
     def get_landmark_image(self, image, landmark):
