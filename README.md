@@ -1,8 +1,8 @@
 # 👍 HGR - Hand Gesture Recognition
 
-HGR is a hand gesture recognition toolkit built on top of Google's MediaPipe.
+HGR is a hand gesture recognition system built with Google MediaPipe.
 
-It is still in development, the aim is to create a system that can be used easily in applications to utilize hand gesture recognition capabilities.
+> 🚧 Under Development
 
 ## ⚙️ Usage
 
@@ -23,10 +23,8 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-`hgr/layout.py` is the main Python file for GUI. Others are landmarks, training and custom gesture files.
-
 ```sh
-python3 hgr/layout.py
+python3 hgr/main.py
 ```
 
 `deactivate` the virtual environment.
@@ -34,6 +32,32 @@ python3 hgr/layout.py
 ```sh
 deactivate
 ```
+
+## ↔️ API Class
+
+The `hgr/mp/api.py` provides a `API Class`, that has following methods.
+
+- `get_gestures()`
+
+  Returns a list of available gestures.
+
+- `get_landmarks_image()`
+
+  Returns landmarks from a image passed as argument.
+
+- `draw_landmarks_image()`
+
+  Draws points on landmarks and connects them.
+
+- `get_landmark_image()`
+
+  Returns landmarks for a specific point, between 0 - 20.
+
+  ![MediaPipe Hands](https://developers.google.com/static/mediapipe/images/solutions/hand-landmarks.png)
+
+- `get_gesture_image()`
+
+  Classifies the gesture from image, and returns it.
 
 ## 🖥️ GUI
 
