@@ -5,6 +5,9 @@ import matplotlib.pyplot as plt
 from mediapipe_model_maker import gesture_recognizer
 
 
+gestures = []
+
+
 class Custom_Gestures_Train:
     def __init__(self, dataset_path=""):
         self.dataset_path = dataset_path
@@ -15,7 +18,8 @@ class Custom_Gestures_Train:
         for i in listdir(self.dataset_path):
             if isdir(join(self.dataset_path, i)):
                 self.labels.append(i)
-        print(self.labels)
+                gestures.append(i)
+        return self.labels
 
     def print_samples(self):
         for label in self.labels:
