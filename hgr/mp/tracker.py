@@ -103,7 +103,7 @@ def main():
             )
             cv.imshow("Tracker", img)
 
-            if cv.waitKey(20) & 0xFF == ord("q"):
+            if cv.waitKey(10) & 0xFF == ord("q"):
                 break
 
 
