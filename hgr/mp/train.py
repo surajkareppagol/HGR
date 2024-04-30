@@ -7,7 +7,7 @@ from mediapipe_model_maker import gesture_recognizer
 gestures = []
 
 
-class Custom_Gestures_Train:
+class Train:
     def __init__(self, dataset_path=""):
         self.dataset_path = dataset_path
         self.labels = []
@@ -54,5 +54,5 @@ class Custom_Gestures_Train:
         loss, acc = self.model.evaluate(self.test_data, batch_size=1)
         return loss, acc
 
-    def export(self, task):
+    def export(self, task="hand_model.task"):
         self.model.export_model(task)
