@@ -1,9 +1,8 @@
-from json import loads
-
 import cv2 as cv
 from mp.api import API
 from PIL import Image, ImageTk
 from ui.util import set_image
+from util.controls import actions
 
 api = API()
 
@@ -35,8 +34,9 @@ class Camera:
     def open_camera(self, window, label):
         frame = self.get_frame()
         if self.detect:
-            image = api.draw_landmarks_image(frame)
             self.gesture = api.get_gesture_image(frame)
+            image = api.draw_landmarks_image(frame)
+            actions(self.gesture)
 
         frame = self.convert_frame(frame)
         image = self.get_image(frame)
@@ -50,13 +50,3 @@ class Camera:
 
     def set_detect(self, detect):
         self.detect = True if detect else False
-
-    def actions(self, detect):
-        self.set_detect(detect)
-        with open("hgr/ui/actions.json", "r") as file:
-            actions = loads(file.read())
-
-        print(self.gesture)
-
-        if self.gesture in actions.keys():
-            print(self.gesture)

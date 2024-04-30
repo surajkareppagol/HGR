@@ -41,8 +41,8 @@ def layout_main(parent, size):
     train_B.pack(side="left", padx=10)
 
     # Button Bindings
-    start_B.bind("<1>", lambda _: camera.actions(True))
-    end_B.bind("<1>", lambda _: camera.actions(False))
+    start_B.bind("<1>", lambda _: camera.set_detect(True))
+    end_B.bind("<1>", lambda _: camera.set_detect(False))
     actions_B.bind("<1>", lambda _: layout_actions(size))
     train_B.bind("<1>", lambda _: layout_train(size))
 
