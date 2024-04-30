@@ -1,6 +1,7 @@
 import tkinter as tk
 
 import ttkbootstrap as ttk
+from camera import set_detect
 from train import train
 from ui.actions import get_position, set_widget
 from ui.util import action_buttons, get_icon
@@ -40,6 +41,8 @@ def layout_main(parent, size):
     train_B.pack(side="left", padx=10)
 
     # Button Bindings
+    start_B.bind("<1>", lambda _: set_detect(True))
+    end_B.bind("<1>", lambda _: set_detect(False))
     actions_B.bind("<1>", lambda _: layout_actions(size))
     train_B.bind("<1>", lambda _: layout_train(size))
 
