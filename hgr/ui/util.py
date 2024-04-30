@@ -1,3 +1,4 @@
+from json import dumps
 from os import path
 from tkinter import PhotoImage, filedialog, font
 
@@ -27,6 +28,10 @@ def set_font():
 def action_buttons(window, reset=False):
     if reset:
         ui.actions.actions = {}
+
+    with open("logs/actions.json", "w") as file:
+        file.write(dumps(ui.actions.actions))
+
     ui.actions.widgets = 0
     window.destroy()
 
