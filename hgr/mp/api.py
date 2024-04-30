@@ -6,12 +6,12 @@
 # get_landmark_image()
 # get_gesture_image()
 
-import mp.train
+import train
 from mp.gesture import Gesture
 from mp.tracker import Tracker
 
 tracker = Tracker()
-gesture = Gesture()
+gesture = Gesture("tasks/models/hand_model.task")
 
 
 class API:
@@ -20,7 +20,7 @@ class API:
         pass
 
     def get_gestures(self):
-        return mp.train.gestures
+        return train.gestures
 
     def get_landmarks_image(self, image):
         image = tracker.detect_hands(image)

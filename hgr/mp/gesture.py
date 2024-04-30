@@ -1,11 +1,6 @@
 import cv2 as cv
 import mediapipe as mpipe
 from mediapipe.tasks.python import vision
-from rich import box
-from rich.console import Console
-from rich.panel import Panel
-from rich.table import Table
-from tracker import Tracker
 
 
 class Gesture:
@@ -71,6 +66,12 @@ def main():
 
 
 if __name__ == "__main__":
+    from mp.tracker import Tracker
+    from rich import box
+    from rich.console import Console
+    from rich.panel import Panel
+    from rich.table import Table
+
     capture = cv.VideoCapture(0)
 
     console = Console()

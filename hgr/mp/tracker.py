@@ -1,9 +1,7 @@
 import time
 
 import cv2 as cv
-import mediapipe as mp
-from rich.console import Console
-from rich.panel import Panel
+import mediapipe as mpipe
 
 
 class Tracker:
@@ -22,7 +20,7 @@ class Tracker:
         self.detection_confidence = detection_confidence
         self.track_confidence = track_confidence
 
-        self.mp_hands = mp.solutions.hands  # type: ignore
+        self.mp_hands = mpipe.solutions.hands  # type: ignore
 
         self.hands = self.mp_hands.Hands(
             self.mode,
@@ -32,7 +30,7 @@ class Tracker:
             self.track_confidence,
         )
 
-        self.mp_draw = mp.solutions.drawing_utils  # type: ignore
+        self.mp_draw = mpipe.solutions.drawing_utils  # type: ignore
 
     def detect_hands(self, img, draw=True):
         img_rgb = cv.cvtColor(img, cv.COLOR_BGR2RGB)
@@ -108,4 +106,7 @@ def main():
 
 
 if __name__ == "__main__":
+    from rich.console import Console
+    from rich.panel import Panel
+
     main()

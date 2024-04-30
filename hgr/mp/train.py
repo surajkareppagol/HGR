@@ -4,7 +4,6 @@ from os.path import isdir, join
 import matplotlib.pyplot as plt
 from mediapipe_model_maker import gesture_recognizer
 
-
 gestures = []
 
 
