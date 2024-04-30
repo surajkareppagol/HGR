@@ -67,6 +67,8 @@ The `hgr/mp/api.py` provides a `API Class`, that has following methods.
 
 ![HGR Train](https://raw.githubusercontent.com/surajkareppagol/Project-Assets/main/HGR/HGR%20Train.png)
 
+![HGR Test](https://raw.githubusercontent.com/surajkareppagol/Project-Assets/main/HGR/HGR%20Test.png)
+
 ## 🎯 Model Maker Scores
 
 ```txt
