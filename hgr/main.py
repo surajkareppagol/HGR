@@ -1,12 +1,10 @@
-import tkinter as tk
-
 import ttkbootstrap as ttk
 import ui.layout
-from camera import Camera
 from rich.console import Console
 from rich.panel import Panel
 from ui.layout import layout_main
 from ui.util import get_dimensions, get_icon, set_font
+from util.util import camera
 
 
 class App(ttk.Window):
@@ -35,13 +33,11 @@ class App(ttk.Window):
 
         self.mainloop()
 
-        camera.open_camera(self, None, release=True)
+        camera.release()
 
 
 if __name__ == "__main__":
     console = Console()
-    camera = Camera()
-
     console.clear()
     console.print(Panel("👍 Hand Gesture Recognition"))
 

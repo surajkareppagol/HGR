@@ -1,3 +1,5 @@
+from json import loads
+
 import cv2 as cv
 from mp.api import API
 from PIL import Image, ImageTk
@@ -5,19 +7,14 @@ from ui.util import set_image
 
 api = API()
 
-detect = False
-
-
-def set_detect(detect_):
-    global detect
-    detect = True if detect_ else False
-
 
 class Camera:
     def __init__(self):
         """Initializes the Camera class"""
 
         self.camera = cv.VideoCapture(0)
+        self.detect = False
+        self.gesture = "none"
 
     def get_frame(self):
         success, frame = self.camera.read()
@@ -35,14 +32,11 @@ class Camera:
 
         return image
 
-    def open_camera(self, window, label, release=False):
-        if release:
-            self.release()
-            return
-
+    def open_camera(self, window, label):
         frame = self.get_frame()
-        if detect:
+        if self.detect:
             image = api.draw_landmarks_image(frame)
+            self.gesture = api.get_gesture_image(frame)
 
         frame = self.convert_frame(frame)
         image = self.get_image(frame)
@@ -53,3 +47,16 @@ class Camera:
 
     def release(self):
         self.camera.release()
+
+    def set_detect(self, detect):
+        self.detect = True if detect else False
+
+    def actions(self, detect):
+        self.set_detect(detect)
+        with open("hgr/ui/actions.json", "r") as file:
+            actions = loads(file.read())
+
+        print(self.gesture)
+
+        if self.gesture in actions.keys():
+            print(self.gesture)

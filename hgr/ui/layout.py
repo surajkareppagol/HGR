@@ -1,10 +1,10 @@
 import tkinter as tk
 
 import ttkbootstrap as ttk
-from camera import set_detect
 from train import train
 from ui.actions import get_position, set_widget
 from ui.util import action_buttons, get_icon
+from util.util import camera
 
 ## Widgets
 
@@ -41,8 +41,8 @@ def layout_main(parent, size):
     train_B.pack(side="left", padx=10)
 
     # Button Bindings
-    start_B.bind("<1>", lambda _: set_detect(True))
-    end_B.bind("<1>", lambda _: set_detect(False))
+    start_B.bind("<1>", lambda _: camera.actions(True))
+    end_B.bind("<1>", lambda _: camera.actions(False))
     actions_B.bind("<1>", lambda _: layout_actions(size))
     train_B.bind("<1>", lambda _: layout_train(size))
 
@@ -119,11 +119,16 @@ def layout_train(size):
     browse_B = ttk.Button(master=buttons_F, text="Browse")
     browse_B.pack(side="left", padx=10)
 
+    # Cancel Button
+    cancel_B = ttk.Button(master=buttons_F, text="Cancel")
+    cancel_B.pack(side="left", padx=10)
+
     # Bind Buttons
     file_B.bind(
         "<1>",
         lambda _: train(train_W, dataset=file_var.get()),
     )
     browse_B.bind("<1>", lambda _: train(train_W, browse=True))
+    cancel_B.bind("<1>", lambda _: train_W.destroy())
 
     train_W.mainloop()
