@@ -33,6 +33,23 @@ python3 hgr/main.py
 deactivate
 ```
 
+## ✅ Requirements
+
+- 🐍 Python3.7+
+- ✨ mediapipe
+- ✨ mediapipe-model-maker
+- ⚡ rich
+- 🌟 ttkbootstrap
+- 🖱️ pyautogui
+
+Mediapipe requires `Python` versions between `3.7` and `3.10`. In `Windows` there are some problems with mediapipe installation, so it is recommended to install these using `pip`.
+
+Recent changes in tensorflow broke the model maker, so use the following to install `mediapipe-model-maker`.
+
+```sh
+pip install "keras<3.0.0" mediapipe-model-maker
+```
+
 ## ↔️ API Class
 
 The `hgr/mp/api.py` provides a `API Class`, that has following methods.
