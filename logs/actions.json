@@ -1,9 +1,3 @@
 {
-  "paper": {
-    "points": [
-      1068,
-      264
-    ],
-    "command": ":"
-  }
+  "paper": { "points": [-10, -10], "command": "brightness" }
 }
