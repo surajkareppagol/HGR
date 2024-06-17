@@ -78,13 +78,13 @@ The `hgr/mp/api.py` provides a `API Class`, that has following methods.
 
 ## 🖥️ GUI
 
-![HGR Main](https://raw.githubusercontent.com/surajkareppagol/Project-Assets/main/HGR/HGR%20Main.png)
+![HGR Main](https://raw.githubusercontent.com/surajkareppagol/Assets/main/16%20-%20HGR/HGR%20Main.png)
 
-![HGR Actions](https://raw.githubusercontent.com/surajkareppagol/Project-Assets/main/HGR/HGR%20Actions.png)
+![HGR Actions](https://raw.githubusercontent.com/surajkareppagol/Assets/main/16%20-%20HGR/HGR%20Actions.png)
 
-![HGR Train](https://raw.githubusercontent.com/surajkareppagol/Project-Assets/main/HGR/HGR%20Train.png)
+![HGR Train](https://raw.githubusercontent.com/surajkareppagol/Assets/main/16%20-%20HGR/HGR%20Train.png)
 
-![HGR Test](https://raw.githubusercontent.com/surajkareppagol/Project-Assets/main/HGR/HGR%20Test.png)
+![HGR Test](https://raw.githubusercontent.com/surajkareppagol/Assets/main/16%20-%20HGR/HGR%20Test.png)
 
 ## 🎯 Model Maker Scores
 
